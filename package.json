@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3"
+  }
+}

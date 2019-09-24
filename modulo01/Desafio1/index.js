@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 
 const server = express();
 server.use(express.json());
@@ -6,30 +6,30 @@ const projects = [];
 let requisicoes = 0;
 
 function hasProject(req, res, next) {
-  const { id } = req.params || "";
+  const { id } = req.params || '';
   return projects.find(project => project.id === id)
     ? next()
-    : res.status(400).json({ error: "O projeto não existe" });
+    : res.status(400).json({ error: 'O projeto não existe' });
 }
 
 function contaReqs(req, res, next) {
   requisicoes++;
-  console.log("Requisicoes:", requisicoes);
+  console.log('Requisicoes:', requisicoes);
   return next();
 }
 
-server.post("/projects", contaReqs, (req, res) => {
+server.post('/projects', contaReqs, (req, res) => {
   const { id, title, tasks } = req.body;
   projects.push({
     id,
     title,
-    tasks
+    tasks,
   });
 
   return res.json(projects);
 });
 
-server.post("/projects/:id/tasks", hasProject, contaReqs, (req, res) => {
+server.post('/projects/:id/tasks', hasProject, contaReqs, (req, res) => {
   const { title } = req.body;
   const { id } = req.params;
 
@@ -42,7 +42,7 @@ server.post("/projects/:id/tasks", hasProject, contaReqs, (req, res) => {
   return res.json(projects);
 });
 
-server.put("/projects/:id", hasProject, contaReqs, (req, res) => {
+server.put('/projects/:id', hasProject, contaReqs, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
   projects.forEach(project => {
@@ -54,7 +54,7 @@ server.put("/projects/:id", hasProject, contaReqs, (req, res) => {
   return res.json(projects);
 });
 
-server.delete("/projects/:id", hasProject, contaReqs, (req, res) => {
+server.delete('/projects/:id', hasProject, contaReqs, (req, res) => {
   const { id } = req.params;
   projects.forEach((project, indice) => {
     if (project.id === id) {
